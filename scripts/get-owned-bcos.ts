@@ -1,9 +1,9 @@
-const API_KEY = "8hV88ReCpgKMmEwkq5JwtTY5SNTEYo9HELWsfH5fH0hOGgF5857IqqIYWce5N3Gw"
+require('dotenv').config();
+
+const API_KEY = process.env.MORALIS_API_KEY;
 
 import fs from 'fs'
 import Moralis from 'moralis';
-
-
 
 async function getTokenIdsOwnedBy(ownerAddress: string) {
 

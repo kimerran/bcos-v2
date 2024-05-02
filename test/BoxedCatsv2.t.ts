@@ -36,6 +36,12 @@ describe("Boxed Cats V2", function () {
       expect(await contract.ownerOf(2)).to.be.eq(acct2.address);
     });
 
+    it("should be able to perform migration airdrop by batch", async () => {
+      const { contract, users: { owner, acct2 } } = await loadFixture(deploy);
+      await contract.migrationDropBatch("0x1392d44498504b5520e21fc061ebf1af3a508f69", [...Array(80).keys()]);
+      expect(await contract.balanceOf("0x1392d44498504b5520e21fc061ebf1af3a508f69")).to.be.eq(3);
+    });
+
     it("should be able to do regular paid mint", async () => {
       const { contract, users: { owner, acct2 } } = await loadFixture(deploy);
       await contract.connect(acct2).mintPaid(acct2.address, { value: hre.ethers.parseUnits("1") });

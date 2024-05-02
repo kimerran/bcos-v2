@@ -8,8 +8,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
 // POG Token
-contract CatPoopCoins is ERC20, Ownable { 
-    constructor(address manager) ERC20("Cat Poop Token", "CPOOP") Ownable(manager) {}
+contract CatPoopCoins is ERC20, Ownable {
+    constructor(
+        address manager
+    ) ERC20("Cat Poop Token", "CPOOP") Ownable(manager) {}
     function excrete(address destination, uint256 amount) public onlyOwner {
         _mint(destination, amount);
     }
@@ -23,11 +25,15 @@ contract BoxedCatsv2 is ERC721URIStorage, Ownable {
     uint256 tokenGenerationRate = 277777777777777; // 24 tokens per day
     uint256 tokenId = 482; // starting ID after the migration drop
     uint256 tokenPrice = 1 ether;
-    string metadataUri = "ipfs://QmNeP59iZkiRpLfiVrguMbrfCdgb8H9Z9XkpdYuSiPq9NK/1.json";
+    string metadataUri =
+        "ipfs://QmNeP59iZkiRpLfiVrguMbrfCdgb8H9Z9XkpdYuSiPq9NK/1.json";
 
     CatPoopCoins poopsie;
 
-    constructor() ERC721("Boxed Cats of Society v2", "BCOSv2") Ownable(msg.sender) {
+    constructor()
+        ERC721("Boxed Cats of Society v2", "BCOSv2")
+        Ownable(msg.sender)
+    {
         poopsie = new CatPoopCoins(address(this));
     }
 
@@ -52,10 +58,10 @@ contract BoxedCatsv2 is ERC721URIStorage, Ownable {
     }
 
     function claimablePoop(uint256 _tokenId) public view returns (uint256) {
-        return  totalGenerated(_tokenId) - totalClaimed(_tokenId);
+        return totalGenerated(_tokenId) - totalClaimed(_tokenId);
     }
 
-    function poopCount(address eoa) public view returns(uint256) {
+    function poopCount(address eoa) public view returns (uint256) {
         return poopsie.balanceOf(eoa);
     }
 
@@ -79,6 +85,15 @@ contract BoxedCatsv2 is ERC721URIStorage, Ownable {
         uint256 _tokenId
     ) public onlyOwner {
         __mint(destination, _tokenId);
+    }
+
+    function migrationDropBatch(
+        address destination,
+        uint256[] memory _tokenIds
+    ) public onlyOwner {
+        for (uint256 i = 0; i < _tokenIds.length; i++) {
+            migrationDrop(destination, _tokenIds[i]);
+        }
     }
 
     // Enables proxy for awarding friend
