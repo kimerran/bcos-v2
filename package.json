@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npx hardhat compile",
-    "test": "npx hardhat test ./test/BoxedCatsv2.t.ts"
+    "test": "npx hardhat test ./test/BoxedCatsv2.t.ts",
+    "ignition:bcos:arbsep": "npx hardhat ignition deploy ./ignition/modules/BoxedCatsv2.ts --network arbsep"
   },
   "keywords": [],
   "author": "",
