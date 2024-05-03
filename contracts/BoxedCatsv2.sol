@@ -2,13 +2,15 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
 
 // POG Token
-contract CatPoopCoins is ERC20, Ownable {
+contract CatPoopCoins is ERC20, ERC20Burnable, Ownable {
     constructor(
         address manager
     ) ERC20("Cat Poop Token", "CPOOP") Ownable(manager) {}
@@ -17,7 +19,7 @@ contract CatPoopCoins is ERC20, Ownable {
     }
 }
 
-contract BoxedCatsv2 is ERC721URIStorage, Ownable {
+contract BoxedCatsv2 is ERC721Burnable, Ownable {
     mapping(address => uint256) public refCount;
     mapping(address => mapping(uint256 => address)) public referrals;
     mapping(uint256 => uint256) tokenIdMintTime; // monitor when the token is minted
