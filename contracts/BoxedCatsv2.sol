@@ -19,6 +19,7 @@ contract CatPoopCoins is ERC20, ERC20Permit, ERC20Burnable, Ownable {
         ERC20Permit("Cat Poop Token")
         Ownable(manager)
     {}
+
     function excrete(address destination, uint256 amount) public onlyOwner {
         _mint(destination, amount);
     }
