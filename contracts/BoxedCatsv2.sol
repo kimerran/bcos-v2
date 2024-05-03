@@ -5,15 +5,20 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
 
 // POG Token
-contract CatPoopCoins is ERC20, ERC20Burnable, Ownable {
+contract CatPoopCoins is ERC20, ERC20Permit, ERC20Burnable, Ownable {
     constructor(
         address manager
-    ) ERC20("Cat Poop Token", "CPOOP") Ownable(manager) {}
+    )
+        ERC20("Cat Poop Token", "CPOOP")
+        ERC20Permit("Cat Poop Token")
+        Ownable(manager)
+    {}
     function excrete(address destination, uint256 amount) public onlyOwner {
         _mint(destination, amount);
     }
